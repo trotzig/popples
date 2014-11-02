@@ -1,12 +1,12 @@
 var backdrop = require('scenes/backdrop.js');
 
-window.addEventListener('load', function() {
+window.addEventListener('load', () => {
   enchant();
 
   game = new Game(1000, 800);
   game.preload('leave.png');
-  game.onload = function () {
-    game.addEventListener('enterframe', function() {
+  game.onload = () => {
+    game.addEventListener('enterframe', () => {
       //sprite.x += width(0.001);
     });
     game.pushScene(backdrop());

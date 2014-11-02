@@ -8,5 +8,13 @@ module.exports = {
       modulesDirectories: [
         __dirname + '/app'
       ]
+    },
+    module: {
+      loaders: [
+        {
+          test: /\.js$/,
+          loader: 'es6-loader'
+        }
+      ]
     }
 };
