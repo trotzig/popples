@@ -14,21 +14,34 @@ module.exports = function(game) {
     surface.context.beginPath();
     var halfSize = Math.floor(size/2);
     surface.context.arc(halfSize, halfSize, halfSize, 0, Math.PI*2, true);
-    surface.context.stroke();
+    //surface.context.stroke();
     surface.context.fill();
     surface.context.closePath();
     bubble.image = surface;
     bubble.x = posX;
     bubble.y = posY;
 
-    // Burst on touch/click
-    bubble.addEventListener('touchstart', () => {
+    var dead = false;
+    var moveUp = () => {
+      if (dead) { return; }
+      bubble.y -= 1 - size / MAX_BUBBLE_SIZE;
+      if (bubble.y < 50) {
+        // Burst it at the top;
+        burst();
+      }
+    };
+
+    var burst = () => {
+      dead = true;
       bubble.tl.clear()
                .moveBy(0, -size, 5, eout).and()
                .scaleTo(0.1, 0.1, 2, eout)
                .moveBy(0, size, 8, ein).and()
-               .fadeOut(8);
-    });
+               .fadeOut(8)
+    };
+
+    // Burst on touch/click
+    bubble.addEventListener('touchstart',  burst);
 
     // Wiggle it
     bubble.tl.moveBy(-size * 0.4, 0, size, einout)
@@ -36,20 +49,15 @@ module.exports = function(game) {
              .loop();
 
     // Bubble it towards the top
-    game.addEventListener('enterframe', () => {
-      bubble.y -= 1 - size / 100;
-      if (bubble.y < -size) {
-        bubble.remove();
-      }
-    })
+    game.addEventListener('enterframe', moveUp);
     return bubble;
   };
 
   var scene = new window.Scene();
   var keepThemBubblesComing = () => {
-    var size = (Math.random() * 150) + 20,
+    var size = (Math.random() * (MAX_BUBBLE_SIZE - 20)) + 20,
         posX = Math.random() * game.width,
-        nextTick = Math.random() * 1000;
+        nextTick = Math.random() * 2000;
     scene.addChild(createBubble(size, posX));
     setTimeout(keepThemBubblesComing, nextTick);
   };
