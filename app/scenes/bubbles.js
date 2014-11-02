@@ -4,6 +4,7 @@ var Bubble = require('objects/bubble'),
 // A layer with bubbles
 module.exports = function(game) {
   var scene = new window.Scene();
+  var bubbleCount = 0;
   var bubbleScore = new window.Label();
   bubbleScore.currentValue = 0;
   bubbleScore.x = 20;
@@ -12,6 +13,7 @@ module.exports = function(game) {
   bubbleScore.color = '#fff';
 
   var bubbleScoreKeeper = (burstEvent) => {
+    bubbleCount--;
     if (burstEvent.causedByUser) {
       bubbleScore.currentValue++;
     } else {
@@ -22,13 +24,16 @@ module.exports = function(game) {
 
   scene.addChild(bubbleScore);
   var keepThemBubblesComing = () => {
-    var size = (Math.random() * (Constants.MAX_BUBBLE_SIZE - 20)) + 20,
-        posX = Math.random() * game.width,
-        speedModifier = 0.5 + (Math.random() * 2),
-        nextTick = Math.random() * 2000;
-    var bubble = new Bubble(game, size, posX, speedModifier);
-    bubble.addBurstListener(bubbleScoreKeeper);
-    scene.addChild(bubble.render());
+    if (bubbleCount < 40) {
+      var size = (Math.random() * (Constants.MAX_BUBBLE_SIZE - 20)) + 20,
+          posX = Math.random() * game.width,
+          speedModifier = 0.5 + (Math.random() * 2);
+      var bubble = new Bubble(game, size, posX, speedModifier);
+      bubble.addBurstListener(bubbleScoreKeeper);
+      scene.addChild(bubble.render());
+      bubbleCount++;
+    }
+    var nextTick = Math.random() * 2000;
     setTimeout(keepThemBubblesComing, nextTick);
   };
   keepThemBubblesComing();
