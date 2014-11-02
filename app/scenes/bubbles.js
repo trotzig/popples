@@ -1,12 +1,15 @@
 // A layer with bubbles
 
+const MAX_BUBBLE_SIZE = 150;
+
 module.exports = function(game) {
   var ein = enchant.Easing.QUAD_EASEIN;
   var eout = enchant.Easing.QUAD_EASEOUT;
   var einout = enchant.Easing.QUAD_EASEINOUT;
 
-  var createBubble = (size, posX) => {
+  var createBubble = (size, posX, speedModifier) => {
     var posY = game.height + size;
+    //var posY = 100;
     var bubble = new window.Sprite(size, size);
     var surface = new window.Surface(size, size);
     surface.context.strokeStyle = 'rgba(255, 255, 255, 0.2)';
@@ -24,7 +27,7 @@ module.exports = function(game) {
     var dead = false;
     var moveUp = () => {
       if (dead) { return; }
-      bubble.y -= 1 - size / MAX_BUBBLE_SIZE;
+      bubble.y -= (1 - size / MAX_BUBBLE_SIZE) * speedModifier;
       if (bubble.y < 50) {
         // Burst it at the top;
         burst();
@@ -57,8 +60,9 @@ module.exports = function(game) {
   var keepThemBubblesComing = () => {
     var size = (Math.random() * (MAX_BUBBLE_SIZE - 20)) + 20,
         posX = Math.random() * game.width,
+        speedModifier = Math.random() * 2,
         nextTick = Math.random() * 2000;
-    scene.addChild(createBubble(size, posX));
+    scene.addChild(createBubble(size, posX, speedModifier));
     setTimeout(keepThemBubblesComing, nextTick);
   };
   keepThemBubblesComing();
