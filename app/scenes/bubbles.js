@@ -24,7 +24,7 @@ module.exports = function(game) {
   var keepThemBubblesComing = () => {
     var size = (Math.random() * (Constants.MAX_BUBBLE_SIZE - 20)) + 20,
         posX = Math.random() * game.width,
-        speedModifier = Math.random() * 2,
+        speedModifier = 0.5 + (Math.random() * 2),
         nextTick = Math.random() * 2000;
     var bubble = new Bubble(game, size, posX, speedModifier);
     bubble.addBurstListener(bubbleScoreKeeper);
