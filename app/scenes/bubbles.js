@@ -28,9 +28,10 @@ module.exports = function(game) {
       var size = (Math.random() * (Constants.MAX_BUBBLE_SIZE - 20)) + 20,
           posX = Math.random() * game.width,
           speedModifier = 0.5 + (Math.random() * 2);
-      var bubble = new Bubble(game, size, posX, speedModifier);
+      var bubble = new Bubble(size);
+      bubble.bubbleFromBottom(game, posX, speedModifier);
       bubble.addBurstListener(bubbleScoreKeeper);
-      scene.addChild(bubble.render());
+      scene.addChild(bubble.get());
       bubbleCount++;
     }
     var nextTick = Math.random() * 2000;

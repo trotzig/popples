@@ -5,16 +5,10 @@ var einout = enchant.Easing.QUAD_EASEINOUT;
 
 
 class Bubble {
-  constructor(game, size, posX, speedModifier) {
-    this.game = game;
+  constructor(size) {
     this.size = size;
-    this.posX = posX;
-    this.speedModifier = speedModifier;
     this.burstListeners = [];
     this.bursted = false;
-  }
-
-  render() {
     this.bubble = new window.Sprite(this.size, this.size);
     var surface = new window.Surface(this.size, this.size);
     surface.context.fillStyle = 'rgba(255, 255, 255, 0.1)';
@@ -24,8 +18,15 @@ class Bubble {
     surface.context.fill();
     surface.context.closePath();
     this.bubble.image = surface;
-    this.bubble.x = this.posX;
-    this.bubble.y = this.game.height;
+  }
+
+  get() {
+    return this.bubble;
+  }
+
+  bubbleFromBottom(game, posX, speedModifier) {
+    this.bubble.x = posX;
+    this.bubble.y = game.height;
 
     // Burst on touch/click
     this.bubble.addEventListener('touchstart',  this.burst.bind(this, true));
@@ -36,9 +37,7 @@ class Bubble {
                   .loop();
 
     // Bubble it towards the top
-    this.game.addEventListener('enterframe', this.moveUp.bind(this));
-
-    return this.bubble;
+    game.addEventListener('enterframe', this.moveUp.bind(this, speedModifier));
   }
 
   burst(causedByUser) {
@@ -56,12 +55,12 @@ class Bubble {
     }
   }
 
-  moveUp() {
+  moveUp(speedModifier) {
     if (this.bursted) {
       // Don't interfer with the bubble being bursted
       return;
     }
-    this.bubble.y -= (1 - this.size / Constants.MAX_BUBBLE_SIZE) * this.speedModifier;
+    this.bubble.y -= (1 - this.size / Constants.MAX_BUBBLE_SIZE) * speedModifier;
     if (this.bubble.y < 50) {
       // Burst it at the top;
       this.burst(false);
