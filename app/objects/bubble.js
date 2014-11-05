@@ -33,8 +33,8 @@ class Bubble {
     this.bubble.addEventListener('touchstart',  this.burst.bind(this, true));
 
     // Make it appear
-    this.bubble.tl.scaleTo(1, 8, eout).and()
-                  .moveBy(0, -this.size * 0.5, 8, eout)
+    this.bubble.tl.scaleTo(1, 15, eout).and()
+                  .moveBy(0, -10, 15, eout)
                   .then(() => {
       // Wiggle it
       this.bubble.tl.moveBy(-this.size * 0.4, 0, this.size, einout)
