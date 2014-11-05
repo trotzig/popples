@@ -1,28 +1,15 @@
 var Bubble = require('objects/bubble'),
-    Constants = require('constants');
+    Constants = require('constants'),
+    ScoreKeeper = require('objects/score_keeper');
 
 // A layer with bubbles
 module.exports = function(game) {
   var scene = new window.Scene();
   var bubbleCount = 0;
-  var bubbleScore = new window.Label();
-  bubbleScore.currentValue = 0;
-  bubbleScore.x = 20;
-  bubbleScore.y = 20;
-  bubbleScore.font = '30px sans-serif';
-  bubbleScore.color = '#fff';
 
-  var bubbleScoreKeeper = (burstEvent) => {
-    bubbleCount--;
-    if (burstEvent.causedByUser) {
-      bubbleScore.currentValue++;
-    } else {
-      bubbleScore.currentValue--;
-    }
-    bubbleScore.text = bubbleScore.currentValue;
-  };
+  var scoreKeeper = new ScoreKeeper();
+  scene.addChild(scoreKeeper.get());
 
-  scene.addChild(bubbleScore);
   var keepThemBubblesComing = () => {
     if (bubbleCount < 40) {
       var size = (Math.random() * (Constants.MAX_BUBBLE_SIZE - 20)) + 20,
@@ -30,7 +17,8 @@ module.exports = function(game) {
           speedModifier = 0.5 + (Math.random() * 2);
       var bubble = new Bubble(size);
       bubble.bubbleFromBottom(game, posX, speedModifier);
-      bubble.addBurstListener(bubbleScoreKeeper);
+      bubble.addBurstListener(scoreKeeper.bubbleBursted.bind(scoreKeeper));
+      bubble.addBurstListener(() => bubbleCount--);
       scene.addChild(bubble.get());
       bubbleCount++;
     }
