@@ -14,7 +14,7 @@ module.exports = function(game) {
     if (bubbleCount < 40) {
       var size = (Math.random() * (Constants.MAX_BUBBLE_SIZE - 20)) + 20,
           posX = Math.random() * game.width,
-          speedModifier = 1 + (Math.random() * 2);
+          speedModifier = 0.5 + (Math.random() * 2);
       var bubble = new Bubble(size);
       bubble.bubbleFromBottom(game, posX, speedModifier);
       bubble.addBurstListener(scoreKeeper.bubbleBursted.bind(scoreKeeper));

@@ -66,7 +66,7 @@ class Bubble {
       // Don't interfer with the bubble being bursted
       return;
     }
-    this.bubble.y -= (1 - this.size / Constants.MAX_BUBBLE_SIZE) * speedModifier;
+    this.bubble.y -= (1 - this.size / (Constants.MAX_BUBBLE_SIZE * 2)) * speedModifier;
     if (this.bubble.y < 50) {
       // Burst it at the top;
       this.burst(false);
