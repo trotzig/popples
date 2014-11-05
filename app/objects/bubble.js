@@ -34,7 +34,7 @@ class Bubble {
 
     // Make it appear
     this.bubble.tl.scaleTo(1, 15, eout).and()
-                  .moveBy(0, -10, 15, eout)
+                  .moveBy(0, -10 * speedModifier, 15, eout)
                   .then(() => {
       // Wiggle it
       this.bubble.tl.moveBy(-this.size * 0.4, 0, this.size, einout)
