@@ -12,11 +12,21 @@ class Bubble {
     this.bubble = new window.Sprite(this.size, this.size);
     var surface = new window.Surface(this.size, this.size);
     surface.context.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    surface.context.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+    surface.context.lineWidth = 1;
     surface.context.beginPath();
     var halfSize = Math.floor(this.size/2);
-    surface.context.arc(halfSize, halfSize, halfSize, 0, Math.PI*2, true);
+    surface.context.arc(halfSize, halfSize, this.size/2.5, 0, Math.PI*2);
+    surface.context.fill();
+    surface.context.stroke();
+    surface.context.closePath();
+
+    // Draw a small brighter circle in the upper left corner
+    surface.context.beginPath();
+    surface.context.arc(this.size/3, this.size/3, this.size/10, 0, Math.PI*2);
     surface.context.fill();
     surface.context.closePath();
+
     this.bubble.image = surface;
   }
 
