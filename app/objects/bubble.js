@@ -84,18 +84,31 @@ class Bubble {
   }
 
   wind(event) {
-    var centerX = this.bubble.x + (this.size / 2);
-    if (event.x > centerX) {
-      this.bubble.x -= 1;
-    } else if (event.x < centerX) {
-      this.bubble.x += 1;
-    }
+    if (this.bubble.within(event.transmitter, Constants.WIND_REACH)) {
+      var centerX = this.bubble.x + (this.size / 2);
+      var centerY = this.bubble.y + (this.size / 2);
 
-    var centerY = this.bubble.y + (this.size / 2);
-    if (event.y > centerY) {
-      this.bubble.y -= 1;
-    } else if (event.y < centerY) {
-      this.bubble.y += 1;
+      var distanceX = Math.abs(centerX - event.x);
+      var distanceY = Math.abs(centerY - event.y);
+      var totalDistance = distanceX + distanceY;
+
+      var speedX = ((Constants.WIND_REACH - distanceX) * distanceX / totalDistance)
+                   / Constants.WIND_REACH;
+
+      var speedY = ((Constants.WIND_REACH - distanceY) * distanceY / totalDistance)
+                   / Constants.WIND_REACH;
+
+      if (event.x > centerX) {
+        this.bubble.x -= speedX * 10;
+      } else if (event.x < centerX) {
+        this.bubble.x += speedX * 10;
+      }
+
+      if (event.y > centerY) {
+        this.bubble.y -= speedY * 10;
+      } else if (event.y < centerY) {
+        this.bubble.y += speedY * 10;
+      }
     }
   }
 

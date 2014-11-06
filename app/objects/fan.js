@@ -22,7 +22,8 @@ class Fan {
     this.image.addEventListener('enterframe', (e) => {
       if (this.blowing) {
         let event = new window.Event('wind');
-        event._initPosition(this.lastFollowEvent.x, this.lastFollowEvent.y);
+        event.transmitter = this.image;
+        event._initPosition(this.lastEvent.x, this.lastEvent.y)
         this.image.dispatchEvent(event);
       }
     });
@@ -31,7 +32,7 @@ class Fan {
   follow(event) {
     this.image.x = event.x - this.size/2;
     this.image.y = event.y - this.size/2;
-    this.lastFollowEvent = event;
+    this.lastEvent = event;
   }
 
   addWindListener(windListenerFunc) {
