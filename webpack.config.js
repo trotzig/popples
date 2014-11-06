@@ -1,8 +1,8 @@
 module.exports = {
-  entry: "./_feed-the-blob.js",
+  entry: "./_popples.js",
   output: {
       path: __dirname + "/dist",
-      filename: "feed-the-blob.js"
+      filename: "popples.js"
   },
   resolve: {
     modulesDirectories: [
