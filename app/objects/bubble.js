@@ -83,6 +83,22 @@ class Bubble {
     }
   }
 
+  wind(event) {
+    var centerX = this.bubble.x + (this.size / 2);
+    if (event.x > centerX) {
+      this.bubble.x -= 1;
+    } else if (event.x < centerX) {
+      this.bubble.x += 1;
+    }
+
+    var centerY = this.bubble.y + (this.size / 2);
+    if (event.y > centerY) {
+      this.bubble.y -= 1;
+    } else if (event.y < centerY) {
+      this.bubble.y += 1;
+    }
+  }
+
   addBurstListener(listener) {
     this.burstListeners.push(listener);
   }
