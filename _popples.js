@@ -6,6 +6,7 @@ window.addEventListener('load', () => {
 
   var game = new window.Game(window.innerWidth, window.innerHeight);
   game.preload('app/assets/backdrop.png');
+  game.preload('app/assets/mouse.png');
   game.scale = 1;
   game.onload = () => {
     game.pushScene(backdrop(game));
