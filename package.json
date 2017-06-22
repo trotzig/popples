@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "6to5-loader": "latest",
+    "webpack": "1",
+  }
+}
